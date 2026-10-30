@@ -4,6 +4,7 @@ The full stack behind my "how it's made" reels: Claude Code finds a viral everyd
 animates it as a 60 fps motion graphic, adds a voiceover, posts it to Instagram, and runs a comment to DM funnel.
 
 Everything here is plain code you run on your own machine. No subscriptions.
+Rendering runs on [HyperFrames](https://github.com/heygen-com/hyperframes) (HTML in, video out, built for agents).
 
 ## What's inside
 

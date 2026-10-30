@@ -1,0 +1,40 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[
+    { "id": "theme", "type": "enum", "label": "Theme", "default": "ink", "options": [ { "value": "ink", "label": "Ink" } ] }
+  ]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>How Cigarettes Are Made</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="kit/kit.css" />
+    <link rel="stylesheet" href="scene.css" />
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-fps="60" data-kit-flash="" data-width="1080" data-height="1920"></div>
+    <audio id="kit-score" src="audio/score.wav" data-start="0" data-duration="30" data-track-index="10" data-volume="1"></audio>
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <filter id="mblur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="14 0" /></filter>
+        <filter id="mblur2" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="6 0" /></filter>
+      </defs>
+    </svg>
+    <script src="kit/kit.js"></script>
+    <script src="scene.js"></script>
+    <script>
+      Promise.all([
+        document.fonts.load('700 100px "Kit Grotesk"'),
+        document.fonts.load('500 100px "Kit Grotesk"'),
+        document.fonts.load('italic 400 100px "Kit Serif"'),
+        document.fonts.load('600 100px "Kit Mono"'),
+        document.fonts.load('600 100px "Kit Sans"')
+      ]).then(function () { return document.fonts.ready; }).then(function () {
+        window.__timelines["main"] = window.buildScene();
+        if (window.__hfForceTimelineRebind) window.__hfForceTimelineRebind();
+      });
+    </script>
+  </body>
+</html>

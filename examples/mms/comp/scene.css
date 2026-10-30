@@ -1,0 +1,38 @@
+/* M&M's: object specific styles. Shared styles live in lib.css. */
+#root .mm { position: absolute; border-radius: 50%; display: grid; place-items: center;
+  background:
+    radial-gradient(circle at 33% 27%, rgba(255,255,255,0.85) 0 5%, rgba(255,255,255,0.2) 15%, transparent 33%),
+    radial-gradient(circle at 50% 62%, var(--c) 0 52%, color-mix(in srgb, var(--c) 68%, #000) 100%);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5), inset 0 -10px 16px rgba(0, 0, 0, 0.28), inset 0 6px 10px rgba(255, 255, 255, 0.18); }
+#root .mm span::after { content: "m"; }
+#root .mm span { font-family: "Kit Sans", sans-serif; font-weight: 800; color: #fffdf6; line-height: 1; letter-spacing: -0.05em;
+  transform: translateY(-6%); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25); }
+#root .mm .wash { position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle at 33% 27%, #ffffff 0 6%, #f6efe2 30%, #ddd2bf 100%); }
+#root .lent { position: absolute; border-radius: 50%;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 60%, #fff) 0%, var(--c) 40%, color-mix(in srgb, var(--c) 60%, #000) 100%);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.5); }
+#root .stream { position: absolute; transform-origin: 50% 0; border-radius: 0 0 30px 30px;
+  background: repeating-linear-gradient(180deg, #6b3a1c 0 18px, #8a4e26 18px 30px, #5a2f16 30px 44px);
+  box-shadow: inset 8px 0 14px rgba(255, 210, 160, 0.25), inset -10px 0 14px rgba(0, 0, 0, 0.45), 0 0 30px rgba(120, 60, 20, 0.4); }
+#root .vat { position: absolute; border-radius: 0 0 40px 40px; border: 4px solid rgba(255, 230, 190, 0.35); border-top: none; overflow: hidden;
+  background: linear-gradient(180deg, rgba(40, 30, 22, 0.9), rgba(20, 14, 10, 0.95)); }
+#root .vat s { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; transform-origin: 50% 100%;
+  background: radial-gradient(ellipse at 50% 0%, #a0602e 0%, #6b3a1c 40%, #4a2610 100%); }
+#root .roller { position: absolute; border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #f2eee6 0%, #a39d93 40%, #3d3832 100%);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 0 10px rgba(30, 26, 22, 0.6); }
+#root .roller i { position: absolute; left: 50%; top: 4%; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: #2a2018; box-shadow: inset 0 3px 6px rgba(0,0,0,0.6); }
+#root .belt { position: absolute; left: 0; right: 0; background: repeating-linear-gradient(90deg, #1d1814 0 40px, #26201a 40px 44px); border-top: 3px solid rgba(255, 220, 160, 0.3); border-bottom: 3px solid rgba(0, 0, 0, 0.6); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6); }
+#root .drum-body { position: absolute; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #f0ebe2 0%, #9a948a 45%, #3a352f 100%);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), inset 0 0 0 14px rgba(40, 36, 30, 0.7); }
+#root .drum-hole { position: absolute; border-radius: 50%; overflow: hidden;
+  background: radial-gradient(circle at 50% 40%, #2a221b 0%, #120e0a 80%); box-shadow: inset 0 20px 40px rgba(0, 0, 0, 0.8); }
+#root .bolt { position: absolute; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #fff, #777 60%, #333); }
+#root .heat { position: absolute; width: 6px; border-radius: 3px; background: linear-gradient(180deg, rgba(255, 120, 40, 0), rgba(255, 140, 50, 0.85), rgba(255, 120, 40, 0)); filter: blur(1px); }
+#root .roller-p { position: absolute; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #4a4038 0%, #241e18 70%);
+  box-shadow: 0 0 0 10px #8f877c, 0 0 0 14px #3a342e, 0 20px 50px rgba(0, 0, 0, 0.6); }
+#root .roller-p i { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #e9e2d6; }
+#root .press { position: absolute; width: 180px; height: 26px; border-radius: 8px; background: linear-gradient(180deg, #d9d2c6, #8a8278); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5); }

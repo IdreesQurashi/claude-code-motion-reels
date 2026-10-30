@@ -1,0 +1,25 @@
+{
+  "object": "OBJECT NAME",
+  "slug": "object-slug",
+  "duration": 34,
+  "seed": 11,
+  "hook": { "number": "20,000", "unit": "a minute" },
+  "beats": { "hook_end": 4.0 },
+  "counter": { "label": "Made while you watch", "to": 10000, "by": 29.4 },
+  "steps": [["Step one", 4, 8], ["Step two", 8, 11]],
+  "progress": [3.9, 25.0],
+  "freeze": { "at": 16.0, "until": 16.55 },
+  "finale": { "at": 26.9, "lead": "And while you watched,", "claim": "This machine made", "payoff": "*more.*" },
+  "cta": { "at": 30.0, "keyword": "MOTION", "line": "Want reels like this?", "sub": "I'll DM you the full stack.", "sub2": "Free.", "handle": "@your_handle" },
+  "vo": {
+    "voice": "en-US-AndrewMultilingualNeural",
+    "lines": [
+      [0.05, 2.55, "Hook line."],
+      [30.10, 33.60, "Want reels like this? Comment motion, and I'll send you the whole stack, free."]
+    ]
+  },
+  "music_dip_at": 28.2,
+  "caption": "Hook line.\n\nBody.\n\nComment MOTION and I'll DM you the full Claude Code stack that made this. Free.\n\n#tags",
+  "sources": ["https://en.wikipedia.org/wiki/..."],
+  "instagram": {}
+}

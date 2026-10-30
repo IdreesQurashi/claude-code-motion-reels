@@ -1,0 +1,17 @@
+{
+  "approved": false,
+  "keyword": "MOTION",
+  "delivery_url": "",
+  "follow_check": "strict",
+  "gate": "Hey {username}! Glad you liked it 🙌 I'm sending you the full Claude Code stack behind this reel, free. One thing first: follow @your_handle so you catch the next one, then tap \"I followed\" below 👇",
+  "followed_button": "I followed ✅",
+  "nudge": "Hmm, I can't see the follow yet. Follow @your_handle, then tap \"I followed\" again and it's yours.",
+  "deliver_title": "You're in 🙌 Here's the whole stack.",
+  "deliver_subtitle": "The tools, skills and automation behind the reel.",
+  "deliver_button": "Get the stack",
+  "public_replies": [
+    "Sent, check your DMs 📩",
+    "Just sent it to you 🙌",
+    "Check your inbox 👀"
+  ]
+}

@@ -1,0 +1,11 @@
+reels/.secrets/
+reels/bot/state*.db
+reels/bot/templates.json
+reels/bot/campaigns.json
+films/
+radar/
+**/kit/
+**/snapshots/
+**/renders/
+**/audio/
+__pycache__/

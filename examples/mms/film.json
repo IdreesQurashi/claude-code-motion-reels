@@ -1,0 +1,138 @@
+{
+  "object": "M&M's",
+  "slug": "mms",
+  "duration": 34,
+  "seed": 23,
+  "hook": {
+    "number": "1941",
+    "line": "Built for war."
+  },
+  "beats": {
+    "hook_end": 4.0
+  },
+  "counter": {
+    "label": "Years since 1941",
+    "to": 85,
+    "by": 29.0
+  },
+  "steps": [
+    [
+      "Shaping",
+      4,
+      8
+    ],
+    [
+      "Coating",
+      8,
+      12
+    ],
+    [
+      "Color",
+      12,
+      16.55
+    ],
+    [
+      "The shell",
+      16.55,
+      21
+    ],
+    [
+      "Printing",
+      21,
+      25
+    ]
+  ],
+  "progress": [
+    3.9,
+    25.0
+  ],
+  "freeze": {
+    "at": 16.0,
+    "until": 16.55,
+    "line": "So why no melting?"
+  },
+  "finale": {
+    "at": 25.2,
+    "lead": "Built for war in 1941.",
+    "claim": "Still here after",
+    "payoff": "*years.*"
+  },
+  "cta": {
+    "at": 30.0,
+    "keyword": "MOTION",
+    "line": "Want reels like this?",
+    "sub": "I'll DM you the full stack.",
+    "sub2": "Free.",
+    "handle": "@your_handle"
+  },
+  "vo": {
+    "voice": "en-US-AndrewMultilingualNeural",
+    "lines": [
+      [
+        0.05,
+        2.0,
+        "This candy was built for war."
+      ],
+      [
+        2.1,
+        3.95,
+        "So why doesn't it melt in your hand?"
+      ],
+      [
+        4.15,
+        7.75,
+        "It starts as liquid chocolate, shaped into tiny lentils."
+      ],
+      [
+        8.1,
+        11.85,
+        "Then they spin in giant drums, coat after coat of sugar syrup."
+      ],
+      [
+        12.1,
+        15.85,
+        "Then the color. And every color tastes exactly the same."
+      ],
+      [
+        16.02,
+        16.85,
+        "So why no melting?"
+      ],
+      [
+        16.95,
+        17.9,
+        "Sugar armor."
+      ],
+      [
+        18.05,
+        20.9,
+        "A hard sugar shell, so soldiers could carry it into the heat."
+      ],
+      [
+        21.1,
+        24.85,
+        "Then every one gets its m, printed white since 1954."
+      ],
+      [
+        25.15,
+        29.85,
+        "Built for war in 1941, and still here, eighty five years later."
+      ],
+      [
+        30.1,
+        33.85,
+        "Want reels like this? Comment motion, and I'll send you the whole stack, free."
+      ]
+    ]
+  },
+  "music_dip_at": 25.0,
+  "cover_ms": 1300,
+  "caption": "This candy was built for war. 🍫\n\nIn 1941, M&M's went to the US military first. The hard sugar shell let soldiers carry chocolate into the heat without it melting.\n\nSo why doesn't it melt in your hand? Watch till the end.\n\nComment MOTION and I'll DM you the full Claude Code stack that made this. Free.\n\n#halloween #candy #chocolate #foodscience #motiongraphics",
+  "sources": [
+    "https://en.wikipedia.org/wiki/M%26M%27s (1941 launch, sold only to the military in WWII, shell for warm climates, hard panning shell, 1949 slogan, black m 1950 then white 1954, every color same taste)",
+    "https://www.history.com/news/the-wartime-origins-of-the-mm (wartime origins)",
+    "https://www.qgdigitalpublishing.com/article/The+Candy+That+Went+to+War./3603025/650063/article.html (MOAA, March 2020: shell kept chocolate from melting in heat and humidity)"
+  ],
+  "notes": "No production count on screen: published daily figures disagree by up to 1000x (2 million per 8 h, 10 million a day, 2 billion per 8 h). Forming method of the centers is not sourced, so the visuals show it generically and the words only say 'shaped into tiny lentils'.",
+  "instagram": {}
+}

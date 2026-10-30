@@ -258,8 +258,16 @@ def cmd_publish(fd, approved):
     g = f"https://graph.facebook.com/{api}"
     q = urllib.parse.urlencode({"media_type": "REELS", "upload_type": "resumable", "caption": film["caption"], "share_to_feed": "true", "thumb_offset": str(int(film.get("cover_ms", 1400)))})
     cid = _call(f"{g}/{ig}/media", tok, data=q.encode(), method="POST")["id"]
-    up = _call(f"https://rupload.facebook.com/ig-api-upload/{api}/{cid}", tok, data=video.read_bytes(), headers={"offset": "0", "file_size": str(video.stat().st_size)}, method="POST")
-    print("container", cid, up)
+    # rupload sometimes answers 400 ProcessingFailedError even though the bytes arrived (seen 2026-10-30):
+    # never trust that answer alone, the container status below decides. Never retry with a new container while
+    # an earlier one may still finish, or the reel could be posted twice.
+    req = urllib.request.Request(f"https://rupload.facebook.com/ig-api-upload/{api}/{cid}", data=video.read_bytes(), method="POST",
+                                 headers={"Authorization": f"OAuth {tok}", "offset": "0", "file_size": str(video.stat().st_size)})
+    try:
+        with urllib.request.urlopen(req, timeout=600) as r:
+            print("container", cid, r.read().decode()[:200])
+    except urllib.error.HTTPError as e:
+        print(f"container {cid}: upload answered HTTP {e.code} {e.read().decode()[:160]}; checking the container status instead")
     for _ in range(60):
         st = _call(f"{g}/{cid}?fields=status_code,status", tok)
         if st.get("status_code") == "FINISHED":

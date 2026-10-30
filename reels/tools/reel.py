@@ -79,11 +79,39 @@ def cmd_new(slug, obj):
     print(f"scaffolded {fd}\nnext: write film.json (script, timings, caption, sources) and comp/scene.js, then: reel.py sync {fd.name}")
 
 
+def resolve(fd):
+    """film.json plus everything the voiceover decides: line times, words, length, CTA, freeze, counter."""
+    film = load(fd)
+    tf, wf = fd / "vo" / "timing.json", fd / "vo" / "words.json"
+    if tf.exists():  # voice first films: scene times, captions and length come from the voiceover
+        film["timing"] = json.loads(tf.read_text())
+        film["words"] = json.loads(wf.read_text())
+        last = film["timing"][-1]
+        if film.get("duration") == "auto":
+            film["duration"] = round(last["end"] + film.get("tail", 0.9), 1)
+        if film.get("cta") and "at_line" in film["cta"]:
+            film["cta"]["at"] = round(film["timing"][film["cta"]["at_line"]]["start"] - 0.15, 2)
+        c = film.get("counter")
+        if c and "rate" in c:
+            c["by"] = round(film["timing"][c.get("land_line", -2)]["end"], 2)
+            c["to"] = int(round(c["rate"] * c["by"]))
+        fz = film.get("freeze")
+        if fz and "line" in fz:  # the freeze lands on the start of its line; music goes silent for that beat
+            fz["at"] = round(film["timing"][fz["line"]]["start"] - 0.05, 2)
+            fz["until"] = round(fz["at"] + fz.get("hold", 0.6), 2)
+        if "music_dip_line" in film:
+            film["music_dip_at"] = round(film["timing"][film["music_dip_line"]]["start"] - 0.2, 2)
+    elif film.get("duration") == "auto":
+        sys.exit("duration is auto: run reel.py vo first")
+    return film
+
+
 def cmd_sync(fd):
     film = load(fd)
     comp = fd / "comp"
     for f in ("lib.js", "lib.css"):  # engine fixes reach every film that syncs
         shutil.copy(ENGINE / f, comp / f)
+    film = resolve(fd)
     (comp / "film.js").write_text("window.FILM = " + json.dumps(film, ensure_ascii=False) + ";\n")
     html = (comp / "index.html").read_text()
     html = re.sub(r'data-duration="[\d.]+"( data-fps)', f'data-duration="{film["duration"]}"\\1', html, count=1)
@@ -122,9 +150,56 @@ def cmd_render(fd):
 TRIM = "silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.02,areverse,silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.04,areverse"
 
 
+async def _vo_flow(fd, film):
+    """Voice first: lines spoken back to back at a natural pace; word timings captured for captions and scenes."""
+    import edge_tts
+    vo = film["vo"]
+    voice, rate, gap = vo.get("voice", "en-US-AndrewMultilingualNeural"), vo.get("rate", "+6%"), float(vo.get("gap", 0.22))
+    out = fd / "vo" / "lines"
+    out.mkdir(parents=True, exist_ok=True)
+    t, placed, words, timing = float(vo.get("start", 0.08)), [], [], []
+    for i, ln in enumerate(vo["lines"]):
+        text = ln["text"]
+        mp3, wav = out / f"l{i + 1:02d}.mp3", out / f"l{i + 1:02d}.wav"
+        for attempt in range(4):
+            try:
+                audio, bounds = bytearray(), []
+                async for ch in edge_tts.Communicate(text, voice, rate=ln.get("rate", rate), boundary="WordBoundary").stream():
+                    if ch["type"] == "audio":
+                        audio += ch["data"]
+                    elif ch["type"] == "WordBoundary":
+                        bounds.append((ch["offset"] / 1e7, ch["duration"] / 1e7, ch["text"]))
+                if not audio or not bounds:
+                    raise RuntimeError("no audio")
+                break
+            except Exception as e:
+                if attempt == 3:
+                    raise
+                print(f"   retry {attempt + 1} after {type(e).__name__}")
+                await asyncio.sleep(2 + 3 * attempt)
+        mp3.write_bytes(bytes(audio))
+        # keep the leading silence (word offsets are measured from the clip start); trim only the tail
+        ff("-i", str(mp3), "-af", "areverse,silenceremove=start_periods=1:start_threshold=-48dB:start_silence=0.04,areverse,aresample=48000", "-ac", "1", str(wav))
+        start = max(t, float(ln.get("at", 0)))
+        lead = bounds[0][0]
+        clip_start = max(0.0, start - lead)
+        end = clip_start + dur(wav)
+        placed.append({"start": round(clip_start, 3), "speech": round(start, 3), "end": round(end, 3), "text": text, "file": str(wav)})
+        timing.append({"start": round(start, 3), "end": round(end, 3)})
+        words += [{"t": round(clip_start + o, 3), "d": round(d, 3), "w": w, "line": i} for o, d, w in bounds]
+        print(f"{i + 1:02d} {start:6.2f} -> {end:6.2f}  {text}")
+        t = end + gap + float(ln.get("pause", 0))
+    (fd / "vo" / "placement.json").write_text(json.dumps({"voice": voice, "lines": placed}, indent=1))
+    (fd / "vo" / "words.json").write_text(json.dumps(words))
+    (fd / "vo" / "timing.json").write_text(json.dumps(timing, indent=1))
+    print(f"speech ends at {timing[-1]['end']:.2f} s; {len(words)} words timed. next: reel.py sync")
+
+
 async def _vo(fd):
     import edge_tts
     film = load(fd)
+    if film["vo"]["lines"] and isinstance(film["vo"]["lines"][0], dict):
+        return await _vo_flow(fd, film)
     voice = film["vo"].get("voice", "en-US-AndrewMultilingualNeural")
     out = fd / "vo" / "lines"
     out.mkdir(parents=True, exist_ok=True)
@@ -177,7 +252,7 @@ def _norm_words(s):
 
 
 def cmd_finish(fd):
-    film = load(fd)
+    film = resolve(fd)
     raw, slug = fd / "renders" / "raw.mp4", film["slug"]
     final = fd / "renders" / f"{slug}_9x16_60fps_vo.mp4"
     T = float(film["duration"])

@@ -1,0 +1,37 @@
+/* Screens: object specific styles. Shared styles (and the electric theme) come from lib.css / lib.js. */
+#root .phone { position: absolute; border-radius: 58px; border: 12px solid #151a26; overflow: hidden;
+  box-shadow: 0 0 0 3px #2b3346, 0 40px 90px rgba(0, 0, 0, 0.7), 0 0 120px rgba(70, 170, 255, 0.25); }
+#root .phone::after { content: ""; position: absolute; left: 50%; top: 14px; width: 110px; height: 30px; margin-left: -55px; border-radius: 16px; background: #05070c; }
+#root .lap { position: absolute; border-radius: 20px; border: 16px solid #151a26; overflow: hidden;
+  box-shadow: 0 0 0 3px #2b3346, 0 40px 90px rgba(0, 0, 0, 0.7), 0 0 140px rgba(70, 170, 255, 0.22); }
+#root .lapbase { position: absolute; height: 34px; border-radius: 0 0 26px 26px; background: linear-gradient(180deg, #3a4256, #1a1f2b);
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 4% 100%); }
+#root .white { position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, #ffffff 0%, #f2f6ff 60%, #dfe8ff 100%); }
+#root .lens { position: absolute; border-radius: 50%; overflow: hidden; border: 10px solid #d9e4ff;
+  box-shadow: 0 0 0 4px #5a6a8c, 0 30px 70px rgba(0, 0, 0, 0.65), 0 0 80px rgba(70, 200, 255, 0.45); }
+#root .rgb { position: absolute; inset: -40px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 46px, #020308 46px 52px),
+    repeating-linear-gradient(90deg, #ff2b3a 0 14px, #020308 14px 18px, #29ff6a 18px 32px, #020308 32px 36px, #2b6dff 36px 50px, #020308 50px 54px);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35)); }
+#root .handle { position: absolute; width: 34px; height: 170px; border-radius: 17px; background: linear-gradient(90deg, #4a5670, #a9b6d6 50%, #4a5670); transform-origin: 50% 0; }
+#root .bar { position: absolute; border-radius: 18px; }
+#root .venn { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
+#root .panel { position: absolute; border-radius: 14px; }
+#root .slat { position: absolute; border-radius: 4px; background: linear-gradient(90deg, #2a3348, #6e7fa6 50%, #2a3348); transform-origin: 50% 50%; }
+#root .ray { position: absolute; height: 6px; border-radius: 3px; }
+#root .tag2 { position: absolute; font-family: "Kit Mono", monospace; font-weight: 600; font-size: 24px; letter-spacing: 0.2em; color: var(--accent-soft); text-transform: uppercase; white-space: nowrap; transform: translateX(-50%); }
+#root .dot { position: absolute; border-radius: 50%; }
+#root .jar { position: absolute; border: 6px solid rgba(190, 220, 255, 0.55); border-bottom: none; border-radius: 220px 220px 0 0;
+  background: linear-gradient(180deg, rgba(120, 170, 255, 0.10), rgba(120, 170, 255, 0.03)); box-shadow: inset 0 0 60px rgba(120, 180, 255, 0.15); }
+#root .heater { position: absolute; height: 26px; border-radius: 13px; background: linear-gradient(90deg, #ff5a1f, #ffb347, #ff5a1f); box-shadow: 0 0 40px #ff7a2a, 0 0 90px rgba(255, 122, 42, 0.6); }
+#root .mask { position: absolute; height: 22px; border-radius: 6px;
+  background: repeating-linear-gradient(90deg, #8f9bb5 0 34px, transparent 34px 48px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5); }
+#root .glass { position: absolute; height: 30px; border-radius: 8px; background: linear-gradient(180deg, rgba(220, 235, 255, 0.55), rgba(160, 190, 240, 0.25)); box-shadow: 0 0 30px rgba(140, 200, 255, 0.35); }
+#root .temp { position: absolute; font-family: "Kit Mono", monospace; font-weight: 700; font-size: 64px; color: #ffb347; text-shadow: 0 0 30px rgba(255, 140, 40, 0.8); }
+#root .bignum2 { font-family: "Kit Mono", monospace; font-weight: 700; font-size: 150px; line-height: 1; color: var(--ink); text-shadow: 0 0 50px rgba(70, 200, 255, 0.55), 0 10px 40px rgba(0, 0, 0, 0.6); }
+#root .off { font-family: "Kit Grotesk", sans-serif; font-weight: 700; font-size: 260px; line-height: 1; letter-spacing: -0.04em; color: var(--hot);
+  text-shadow: -10px 0 0 rgba(0, 240, 255, 0.55), 10px 0 0 rgba(255, 0, 90, 0.55), 0 0 60px rgba(255, 59, 107, 0.6); }
+#root .batt { position: absolute; width: 120px; height: 58px; border: 6px solid #cfe3ff; border-radius: 12px; }
+#root .batt::after { content: ""; position: absolute; right: -16px; top: 14px; width: 8px; height: 18px; border-radius: 0 4px 4px 0; background: #cfe3ff; }
+#root .batt s { position: absolute; left: 6px; top: 6px; bottom: 6px; width: 78%; border-radius: 4px; background: #4ff09a; box-shadow: 0 0 16px #4ff09a; }

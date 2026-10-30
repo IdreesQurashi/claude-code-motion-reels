@@ -1,24 +1,19 @@
 /* Reel engine: shared look for 'how it's made' reels (from the cigarettes film). */
 #root {
-  --bg: #0a0806;
-  --ink: #f7efe2;
-  --muted: #a39581;
-  --gold: #f4b740;
-  --gold2: #c47a1f;
-  --hot: #ff3b2b;
-  --scan: #4fe6ff;
-  --ok: #4ff09a;
+  --bg: #0a0806; --bg-mid: #140e08; --bg-center: #2a1d10; --ink: #f7efe2; --ink-soft: #efe2cb; --muted: #a39581;
+  --accent: #f4b740; --accent-hi: #fff3cf; --accent-mid: #f7c65a; --accent-lo: #d88f2a; --accent-deep: #9c5b16; --accent-soft: #e8c27a;
+  --hot: #ff3b2b; --scan: #4fe6ff; --ok: #4ff09a;
   background: var(--bg);
   perspective: 1400px;
 }
 
 /* ---------- atmosphere ---------- */
 #root .bg { position: absolute; inset: 0; background:
-  radial-gradient(120% 70% at 50% 42%, #2a1d10 0%, #140e08 45%, #0a0806 80%); }
+  radial-gradient(120% 70% at 50% 42%, var(--bg-center) 0%, var(--bg-mid) 45%, var(--bg) 80%); }
 #root .smoke { position: absolute; border-radius: 50%; opacity: 0.9; }
 #root .glow { position: absolute; border-radius: 50%; pointer-events: none;
-  background: radial-gradient(circle, rgba(244, 183, 64, 0.35) 0%, rgba(244, 183, 64, 0.08) 40%, transparent 70%); }
-#root .dust { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #ffd98a; box-shadow: 0 0 8px #ffb84a; }
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 35%, transparent) 0%, color-mix(in srgb, var(--accent) 8%, transparent) 40%, transparent 70%); }
+#root .dust { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--accent-soft); box-shadow: 0 0 8px var(--accent); }
 #root .grain { position: absolute; inset: -200px; opacity: 0.11; mix-blend-mode: overlay; pointer-events: none; z-index: 90;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   background-size: 260px 260px; }
@@ -35,40 +30,40 @@
   text-shadow: 0 10px 40px rgba(0, 0, 0, 0.55); }
 #root .h2 { font-family: "Kit Grotesk", sans-serif; font-weight: 700; font-size: 84px; line-height: 1; letter-spacing: -0.03em; text-transform: uppercase; color: var(--ink);
   text-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); }
-#root .serif { font-family: "Kit Serif", serif; font-style: italic; font-weight: 400; font-size: 80px; line-height: 1.05; color: #efe2cb; letter-spacing: -0.01em;
+#root .serif { font-family: "Kit Serif", serif; font-style: italic; font-weight: 400; font-size: 80px; line-height: 1.05; color: var(--ink-soft); letter-spacing: -0.01em;
   text-shadow: 0 6px 30px rgba(0, 0, 0, 0.6); }
 #root .mono { font-family: "Kit Mono", monospace; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; }
 #root .split-unit { display: inline-block; will-change: transform, opacity, filter; }
 #root .gold .split-unit, #root .gold-solid {
-  background: linear-gradient(180deg, #fff3cf 0%, #f7c65a 42%, #d88f2a 70%, #9c5b16 100%);
+  background: linear-gradient(180deg, var(--accent-hi) 0%, var(--accent-mid) 42%, var(--accent-lo) 70%, var(--accent-deep) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   text-shadow: none; }
-#root .gold { display: inline-block; filter: drop-shadow(0 0 22px rgba(244, 170, 50, 0.45)); }
+#root .gold { display: inline-block; filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent) 45%, transparent)); }
 #root .hot .split-unit, #root .hot-solid { color: var(--hot); }
 
 #root .chip { display: inline-flex; align-items: center; gap: 14px; padding: 16px 28px; border-radius: 999px;
-  border: 2px solid rgba(244, 183, 64, 0.55); background: rgba(20, 14, 8, 0.72);
-  font-family: "Kit Mono", monospace; font-weight: 600; font-size: 28px; letter-spacing: 0.14em; text-transform: uppercase; color: #f6d68f;
-  box-shadow: 0 0 30px rgba(244, 183, 64, 0.18), inset 0 0 20px rgba(244, 183, 64, 0.08); white-space: nowrap; }
-#root .chip i { width: 12px; height: 12px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+  border: 2px solid color-mix(in srgb, var(--accent) 55%, transparent); background: color-mix(in srgb, var(--bg) 72%, transparent);
+  font-family: "Kit Mono", monospace; font-weight: 600; font-size: 28px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-soft);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 18%, transparent), inset 0 0 20px color-mix(in srgb, var(--accent) 8%, transparent); white-space: nowrap; }
+#root .chip i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
 
 /* ---------- HUD ---------- */
 #root .hud { position: absolute; left: 0; right: 0; top: 196px; z-index: 93; display: flex; flex-direction: column; align-items: center; gap: 10px; transform-origin: 50% 50%; }
-#root .hud .lab { display: flex; align-items: center; gap: 14px; font-family: "Kit Mono", monospace; font-weight: 600; font-size: 22px; letter-spacing: 0.24em; color: #cdbb9c; text-transform: uppercase; }
+#root .hud .lab { display: flex; align-items: center; gap: 14px; font-family: "Kit Mono", monospace; font-weight: 600; font-size: 22px; letter-spacing: 0.24em; color: var(--muted); text-transform: uppercase; }
 #root .hud .lab b { width: 14px; height: 14px; border-radius: 50%; background: var(--hot); box-shadow: 0 0 14px var(--hot); }
-#root .hud .num { font-family: "Kit Mono", monospace; font-weight: 700; font-size: 66px; letter-spacing: 0.02em; color: #fff7e8; font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 24px rgba(255, 190, 80, 0.35); line-height: 1; }
+#root .hud .num { font-family: "Kit Mono", monospace; font-weight: 700; font-size: 66px; letter-spacing: 0.02em; color: var(--ink); font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 35%, transparent); line-height: 1; }
 #root .prog { position: absolute; left: 0; right: 0; top: 344px; z-index: 93; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 #root .prog .bars { display: flex; gap: 8px; }
-#root .prog .bar { width: 52px; height: 6px; border-radius: 3px; background: rgba(255, 240, 210, 0.16); overflow: hidden; position: relative; }
-#root .prog .bar s { position: absolute; inset: 0; background: linear-gradient(90deg, #f7c65a, #ffe7a8); transform-origin: 0 50%; transform: scaleX(0); box-shadow: 0 0 10px #f4b740; }
-#root .prog .step { font-family: "Kit Mono", monospace; font-weight: 600; font-size: 20px; letter-spacing: 0.26em; color: #b9a684; text-transform: uppercase; height: 26px; position: relative; width: 600px; text-align: center; }
+#root .prog .bar { width: 52px; height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 16%, transparent); overflow: hidden; position: relative; }
+#root .prog .bar s { position: absolute; inset: 0; background: linear-gradient(90deg, var(--accent-mid), var(--accent-hi)); transform-origin: 0 50%; transform: scaleX(0); box-shadow: 0 0 10px var(--accent); }
+#root .prog .step { font-family: "Kit Mono", monospace; font-weight: 600; font-size: 20px; letter-spacing: 0.26em; color: var(--muted); text-transform: uppercase; height: 26px; position: relative; width: 600px; text-align: center; }
 #root .prog .step span { position: absolute; left: 0; right: 0; top: 0; }
 
 /* ---------- shared parts ---------- */
-#root .ring { position: absolute; border-radius: 50%; border: 4px solid var(--gold); box-shadow: 0 0 30px var(--gold), inset 0 0 30px rgba(244, 183, 64, 0.4); }
-#root .tag { position: absolute; font-family: "Kit Mono", monospace; font-weight: 600; font-size: 22px; letter-spacing: 0.2em; color: #cdbb9c; text-transform: uppercase; white-space: nowrap; }
-#root .tag::before { content: ""; position: absolute; left: 50%; top: -46px; width: 2px; height: 36px; background: rgba(205, 187, 156, 0.6); }
+#root .ring { position: absolute; border-radius: 50%; border: 4px solid var(--accent); box-shadow: 0 0 30px var(--accent), inset 0 0 30px color-mix(in srgb, var(--accent) 40%, transparent); }
+#root .tag { position: absolute; font-family: "Kit Mono", monospace; font-weight: 600; font-size: 22px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+#root .tag::before { content: ""; position: absolute; left: 50%; top: -46px; width: 2px; height: 36px; background: color-mix(in srgb, var(--muted) 60%, transparent); }
 #root .freeze-frame { position: absolute; inset: 70px; z-index: 70; pointer-events: none; visibility: hidden; }
 #root .freeze-frame i { position: absolute; width: 90px; height: 90px; border-color: #fff; border-style: solid; border-width: 0; }
 #root .freeze-frame i:nth-child(1) { left: 0; top: 0; border-left-width: 6px; border-top-width: 6px; }
@@ -83,24 +78,24 @@
 #root .tick.bad { background: rgba(255, 59, 43, 0.18); border: 3px solid var(--hot); color: var(--hot); box-shadow: 0 0 18px rgba(255, 59, 43, 0.6); }
 #root .rej { position: absolute; font-family: "Kit Mono", monospace; font-weight: 700; font-size: 26px; letter-spacing: 0.2em; color: var(--hot); }
 #root .puff { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: rgba(230, 245, 255, 0.85); filter: blur(3px); }
-#root .stamp { position: absolute; padding: 10px 34px; border: 6px solid var(--gold); border-radius: 14px; font-family: "Kit Grotesk", sans-serif; font-weight: 700; font-size: 84px; letter-spacing: 0.02em; color: var(--gold); text-transform: uppercase; background: rgba(10, 8, 6, 0.75); box-shadow: 0 0 40px rgba(244, 183, 64, 0.45); }
+#root .stamp { position: absolute; padding: 10px 34px; border: 6px solid var(--accent); border-radius: 14px; font-family: "Kit Grotesk", sans-serif; font-weight: 700; font-size: 84px; letter-spacing: 0.02em; color: var(--accent); text-transform: uppercase; background: color-mix(in srgb, var(--bg) 75%, transparent); box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 45%, transparent); }
 #root .globe { position: absolute; }
-#root .gdot { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: #ffd27a; box-shadow: 0 0 10px #ffb03a; }
+#root .gdot { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--accent-soft); box-shadow: 0 0 10px var(--accent); }
 #root .ln { display: block; }
-#root .kick { font-family: "Kit Mono", monospace; font-weight: 600; font-size: 34px; letter-spacing: 0.34em; color: #e8c27a; text-transform: uppercase; }
-#root .lbl { position: absolute; font-family: "Kit Mono", monospace; font-weight: 600; font-size: 22px; letter-spacing: 0.22em; color: #e8c27a; text-transform: uppercase; white-space: nowrap; }
-#root .bignum { font-family: "Kit Mono", monospace; font-weight: 700; font-size: 200px; line-height: 1; letter-spacing: -0.01em; color: #fff7e8; font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 50px rgba(255, 190, 80, 0.55), 0 10px 40px rgba(0, 0, 0, 0.6); }
+#root .kick { font-family: "Kit Mono", monospace; font-weight: 600; font-size: 34px; letter-spacing: 0.34em; color: var(--accent-soft); text-transform: uppercase; }
+#root .lbl { position: absolute; font-family: "Kit Mono", monospace; font-weight: 600; font-size: 22px; letter-spacing: 0.22em; color: var(--accent-soft); text-transform: uppercase; white-space: nowrap; }
+#root .bignum { font-family: "Kit Mono", monospace; font-weight: 700; font-size: 200px; line-height: 1; letter-spacing: -0.01em; color: var(--ink); font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 50px color-mix(in srgb, var(--accent) 55%, transparent), 0 10px 40px rgba(0, 0, 0, 0.6); }
 #root .cutline { position: absolute; width: 5px; border-radius: 3px; background: #fff; box-shadow: 0 0 20px #fff, 0 0 40px var(--scan); transform-origin: 50% 0; }
 #root .tick svg { width: 32px; height: 32px; }
 #root .redglow { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255, 59, 43, 0.45) 0%, rgba(255, 59, 43, 0.1) 40%, transparent 70%); }
 #root .spark { position: absolute; width: 60px; height: 60px; border-radius: 50%; background: radial-gradient(circle, #ffffff 0%, rgba(160, 230, 255, 0.8) 25%, transparent 70%); opacity: 0; }
 
 /* ---------- CTA end card: comment a keyword, get the stack by DM ---------- */
-#root .cta-key { display: inline-block; padding: 18px 54px 22px; border-radius: 28px; border: 6px solid var(--gold);
+#root .cta-key { display: inline-block; padding: 18px 54px 22px; border-radius: 28px; border: 6px solid var(--accent);
   font-family: "Kit Grotesk", sans-serif; font-weight: 700; font-size: 168px; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase;
-  background: rgba(20, 14, 8, 0.85); box-shadow: 0 0 60px rgba(244, 183, 64, 0.45), inset 0 0 40px rgba(244, 183, 64, 0.15); }
-#root .cta-key span { background: linear-gradient(180deg, #fff3cf 0%, #f7c65a 45%, #c27a22 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  background: color-mix(in srgb, var(--bg) 85%, transparent); box-shadow: 0 0 60px color-mix(in srgb, var(--accent) 45%, transparent), inset 0 0 40px color-mix(in srgb, var(--accent) 15%, transparent); }
+#root .cta-key span { background: linear-gradient(180deg, var(--accent-hi) 0%, var(--accent-mid) 45%, var(--accent-lo) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 #root .cta-arrow { position: absolute; width: 150px; height: 150px; }
 #root .cta-bubble { position: absolute; width: 120px; height: 120px; }
 
@@ -108,6 +103,13 @@
 #root .nozzle { position: absolute; width: 90px; height: 120px; border-radius: 10px 10px 4px 4px; background: linear-gradient(90deg, #4a4540, #b8b2a8 45%, #6d6760); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); }
 #root .nozzle::after { content: ""; position: absolute; left: 30px; right: 30px; bottom: -22px; height: 24px; background: linear-gradient(90deg, #3a3631, #9c968c, #3a3631); border-radius: 0 0 6px 6px; }
 #root .mist { position: absolute; width: 300px; height: 360px; transform-origin: 50% 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255, 236, 200, 0.55) 0%, rgba(255, 220, 160, 0.18) 45%, transparent 72%);
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--accent-hi) 55%, transparent) 0%, color-mix(in srgb, var(--accent-hi) 18%, transparent) 45%, transparent 72%);
   clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%); filter: blur(4px); }
-#root .drop { position: absolute; width: 8px; height: 14px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: radial-gradient(circle at 35% 35%, #fff8e0, #f0b85a); box-shadow: 0 0 8px rgba(255, 200, 100, 0.8); }
+#root .drop { position: absolute; width: 8px; height: 14px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: radial-gradient(circle at 35% 35%, var(--accent-hi), var(--accent)); box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 80%, transparent); }
+
+/* ---------- captions synced to the voice ---------- */
+#root .caps { position: absolute; inset: 0; z-index: 80; pointer-events: none; }
+#root .cap { position: absolute; left: 60px; right: 60px; text-align: center; visibility: hidden;
+  font-family: "Kit Grotesk", sans-serif; font-weight: 700; font-size: 76px; line-height: 1.14; letter-spacing: -0.02em; color: var(--ink);
+  -webkit-text-stroke: 12px rgba(0, 0, 0, 0.55); paint-order: stroke fill; text-shadow: 0 8px 30px rgba(0, 0, 0, 0.6); }
+#root .cap .cw { display: inline-block; margin: 0 0.1em; transform-origin: 50% 70%; }

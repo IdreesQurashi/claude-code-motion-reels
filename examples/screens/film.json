@@ -1,0 +1,76 @@
+{
+  "object": "Screens",
+  "slug": "screens",
+  "duration": "auto",
+  "tail": 0.9,
+  "seed": 31,
+  "theme": "electric",
+  "counter": {
+    "label": "Times your screen redrew",
+    "rate": 60,
+    "land_line": 9
+  },
+  "freeze": {
+    "line": 6,
+    "hold": 0.6
+  },
+  "cta": {
+    "at_line": 10,
+    "keyword": "MOTION",
+    "line": "Want videos like this?",
+    "sub": "I'll DM you the whole setup.",
+    "sub2": "Free.",
+    "handle": "@your_handle"
+  },
+  "music_dip_line": 9,
+  "vo": {
+    "voice": "en-US-AndrewMultilingualNeural",
+    "rate": "+6%",
+    "gap": 0.25,
+    "lines": [
+      {
+        "text": "Look at anything white on your screen right now."
+      },
+      {
+        "text": "Here's the weird part. It's not actually white."
+      },
+      {
+        "text": "So what are you really looking at?"
+      },
+      {
+        "text": "Zoom in close, and it's all tiny red, green and blue lights. Turn all three on together, and your eye sees white."
+      },
+      {
+        "text": "Your laptop keeps a light glowing behind the screen, and millions of tiny shutters decide how much of it gets through."
+      },
+      {
+        "text": "Your phone works differently. Every single dot makes its own light."
+      },
+      {
+        "text": "And that means something kind of crazy.",
+        "pause": 0.15
+      },
+      {
+        "text": "When your phone shows black, it isn't showing anything. Those dots are simply off, using no power at all."
+      },
+      {
+        "text": "They're made by heating colors to 300 degrees in a vacuum, and letting them land on glass, dot by dot."
+      },
+      {
+        "text": "A normal laptop screen has over six million of these little lights. And while you watched this, your screen redrew itself over two thousand times."
+      },
+      {
+        "text": "Want videos like this? Comment motion, and I'll send you the whole setup, free."
+      }
+    ]
+  },
+  "cover_ms": 2600,
+  "caption": "The white on your screen isn't white. 👀\n\nZoom in and it's tiny red, green and blue lights. Your laptop shines a light through millions of tiny shutters. Your phone? Every dot makes its own light, and black means those dots are simply off.\n\nWhat screen are you watching this on? 👇\n\nComment MOTION and I'll DM you the whole Claude Code setup that made this video. Free.\n\n#techexplained #screens #oled #howitworks #motiongraphics",
+  "sources": [
+    "https://en.wikipedia.org/wiki/Liquid-crystal_display (no light of its own, backlight; voltage lets light pass in varying amounts; each pixel has red, green and blue subpixels with colour filters; made on large glass sheets)",
+    "https://en.wikipedia.org/wiki/OLED (pixels emit their own light, no backlight; an inactive element produces no light and consumes no power; materials heated at 300 C in a high vacuum, patterned through fine metal masks; mainly smartphones)",
+    "Arithmetic: 1920 x 1080 pixels x 3 subpixels = 6,220,800 (Full HD LCD); 60 Hz = 60 redraws a second"
+  ],
+  "notes": "Phones often use OLED subpixel layouts that are not one red, green and blue per pixel, so the script says 'tiny red, green and blue lights', not 'three per dot'. The six million figure is stated for a normal (Full HD) laptop screen.",
+  "instagram": {}
+}

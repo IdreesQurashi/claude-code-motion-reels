@@ -10,15 +10,33 @@
      cta                 { at, keyword, line, sub, handle }   comment-keyword end card (optional)
 */
 (function () {
+  var THEMES = {
+    gold: { bg: "#0a0806", bgMid: "#140e08", bgCenter: "#2a1d10", ink: "#f7efe2", inkSoft: "#efe2cb", muted: "#a39581", accent: "#f4b740",
+      accentHi: "#fff3cf", accentMid: "#f7c65a", accentLo: "#d88f2a", accentDeep: "#9c5b16", accentSoft: "#e8c27a", hot: "#ff3b2b",
+      accentRGB: "244,183,64", glowRGB: "255,196,90", finalColor: "#ffd36b", ctaBg: "#22150b",
+      smoke: ["rgba(150,85,30,0.28)", "rgba(110,60,22,0.30)", "rgba(170,100,40,0.20)", "rgba(120,70,30,0.22)"] },
+    electric: { bg: "#03050b", bgMid: "#06102a", bgCenter: "#0f2a66", ink: "#eef6ff", inkSoft: "#cfe3ff", muted: "#8197bd", accent: "#46c8ff",
+      accentHi: "#e6f9ff", accentMid: "#8fdcff", accentLo: "#2a8cff", accentDeep: "#1546a8", accentSoft: "#a6dcff", hot: "#ff3b6b",
+      accentRGB: "70,200,255", glowRGB: "70,170,255", finalColor: "#9fe6ff", ctaBg: "#0a1838",
+      smoke: ["rgba(40,90,230,0.30)", "rgba(140,50,220,0.22)", "rgba(20,150,230,0.22)", "rgba(70,60,210,0.20)"] }
+  };
   function create(F) {
     var f = Kit.format();
     var W = f.width, H = f.height;
     var root = Kit.root();
-    document.documentElement.style.background = "#0a0806";
     var tl = gsap.timeline({ paused: true });
     var R = Kit.rng(F.seed || 11);
     var E = Kit.el;
     var api = { tl: tl, root: root, W: W, H: H, E: E, svg: Kit.svg };
+    // ---------- theme: every film gets its own colour world (FILM.theme = preset name or token object) ----------
+    var T = Object.assign({}, THEMES.gold, typeof F.theme === "string" ? THEMES[F.theme] : (F.theme || {}));
+    var VARS = { bg: "--bg", bgMid: "--bg-mid", bgCenter: "--bg-center", ink: "--ink", inkSoft: "--ink-soft", muted: "--muted", accent: "--accent",
+      accentHi: "--accent-hi", accentMid: "--accent-mid", accentLo: "--accent-lo", accentDeep: "--accent-deep", accentSoft: "--accent-soft", hot: "--hot" };
+    Object.keys(VARS).forEach(function (k) { if (T[k]) root.style.setProperty(VARS[k], T[k]); });
+    document.documentElement.style.background = T.bg;
+    api.theme = T;
+    function rgba(a) { return "rgba(" + T.accentRGB + "," + a + ")"; }
+    api.rgba = rgba;
     function rnd(a, b) { return a + R() * (b - a); }
     function px(n, x, y, w, h) {
       if (x != null) n.style.left = x + "px";
@@ -85,7 +103,7 @@
 
     // ---------- atmosphere ----------
     E("div", "bg", root);
-    [[-300, 80, 1000, "rgba(150,85,30,0.28)"], [380, 820, 1100, "rgba(110,60,22,0.30)"], [-240, 1300, 900, "rgba(170,100,40,0.20)"], [520, -240, 820, "rgba(120,70,30,0.22)"]].forEach(function (s, i) {
+    [[-300, 80, 1000, T.smoke[0]], [380, 820, 1100, T.smoke[1]], [-240, 1300, 900, T.smoke[2]], [520, -240, 820, T.smoke[3]]].forEach(function (s, i) {
       var d = E("div", "smoke", root);
       px(d, s[0], s[1], s[2], s[2]);
       d.style.background = "radial-gradient(circle, " + s[3] + " 0%, transparent 65%)";
@@ -198,17 +216,17 @@
       var gsv = Kit.svg("svg", { width: 2 * r + 80, height: 2 * r + 80, viewBox: [-(r + 40), -(r + 40), 2 * r + 80, 2 * r + 80].join(" ") }, gb);
       var gd = Kit.svg("defs", {}, gsv), gid = "gfill" + Math.round(a * 100);
       var gr = Kit.svg("radialGradient", { id: gid, cx: "45%", cy: "40%", r: "60%" }, gd);
-      [["0", "rgba(244,183,64,0.16)"], ["1", "rgba(244,183,64,0.02)"]].forEach(function (s) { Kit.svg("stop", { offset: s[0], "stop-color": s[1] }, gr); });
+      [["0", rgba(0.16)], ["1", rgba(0.02)]].forEach(function (s) { Kit.svg("stop", { offset: s[0], "stop-color": s[1] }, gr); });
       var TILT = 0.18;
-      Kit.svg("circle", { cx: 0, cy: 0, r: r, fill: "url(#" + gid + ")", stroke: "rgba(244,183,64,0.55)", "stroke-width": 2.5 }, gsv);
+      Kit.svg("circle", { cx: 0, cy: 0, r: r, fill: "url(#" + gid + ")", stroke: rgba(0.55), "stroke-width": 2.5 }, gsv);
       [-60, -30, 0, 30, 60].forEach(function (lat) {
         var la = lat * Math.PI / 180;
-        Kit.svg("ellipse", { cx: 0, cy: -r * Math.sin(la), rx: r * Math.cos(la), ry: r * Math.cos(la) * TILT, fill: "none", stroke: "rgba(244,183,64,0.2)", "stroke-width": 2 }, gsv);
+        Kit.svg("ellipse", { cx: 0, cy: -r * Math.sin(la), rx: r * Math.cos(la), ry: r * Math.cos(la) * TILT, fill: "none", stroke: rgba(0.2), "stroke-width": 2 }, gsv);
       });
       var mers = [];
-      for (var mi = 0; mi < 6; mi++) mers.push(Kit.svg("ellipse", { cx: 0, cy: 0, rx: r, ry: r, fill: "none", stroke: "rgba(244,183,64,0.2)", "stroke-width": 2 }, gsv));
+      for (var mi = 0; mi < 6; mi++) mers.push(Kit.svg("ellipse", { cx: 0, cy: 0, rx: r, ry: r, fill: "none", stroke: rgba(0.2), "stroke-width": 2 }, gsv));
       var dots = [], N = 180, golden = Math.PI * (3 - Math.sqrt(5));
-      for (var gi = 0; gi < N; gi++) dots.push({ lat: Math.asin(1 - 2 * (gi + 0.5) / N), lon: gi * golden, el: Kit.svg("circle", { r: 3, fill: "#ffd27a" }, gsv) });
+      for (var gi = 0; gi < N; gi++) dots.push({ lat: Math.asin(1 - 2 * (gi + 0.5) / N), lon: gi * golden, el: Kit.svg("circle", { r: 3, fill: T.accentSoft }, gsv) });
       function at(rot) {
         mers.forEach(function (m, i) { m.setAttribute("rx", (r * Math.abs(Math.sin(i * Math.PI / 6 + rot))).toFixed(1)); });
         dots.forEach(function (g) {
@@ -244,7 +262,7 @@
       api.drift(mo, o.at + 1.3, o.end, 10);
       var p = o.punch;
       tl.fromTo(big, { scale: 1 }, { scale: 1.14, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }, p);
-      tl.fromTo(big, { color: "#fff7e8" }, { color: "#ffd36b", duration: 0.2, immediateRender: false }, p);
+      tl.fromTo(big, { color: T.ink }, { color: T.finalColor, duration: 0.2, immediateRender: false }, p);
       [0, 1].forEach(function (i) {
         var rr = E("div", "ring", parent);
         px(rr, 240, 700, 600, 600);
@@ -253,7 +271,7 @@
       });
       api.flashAt(p, 0.32, 0.4);
       var bloom = E("div", "layer", parent);
-      bloom.style.background = "radial-gradient(60% 40% at 50% 52%, rgba(255,196,90,0.38) 0%, rgba(255,160,60,0.1) 45%, transparent 75%)";
+      bloom.style.background = "radial-gradient(60% 40% at 50% 52%, rgba(" + T.glowRGB + ",0.38) 0%, rgba(" + T.glowRGB + ",0.1) 45%, transparent 75%)";
       tl.fromTo(bloom, { autoAlpha: 0, scale: 0.8 }, { autoAlpha: 1, scale: 1.05, duration: 0.5, ease: "expo.out" }, p);
       return { big: big };
     };
@@ -262,7 +280,7 @@
       var s = api.scene(o.at);
       api.sIn(s, o.at, { scale: 1.2 });
       var bk = E("div", "layer", s);
-      bk.style.background = "radial-gradient(80% 60% at 50% 46%, #22150b 0%, #0a0806 75%)";
+      bk.style.background = "radial-gradient(80% 60% at 50% 46%, " + T.ctaBg + " 0%, " + T.bg + " 75%)";
       api.glow(s, 540, 900, 1100, o.at, F.duration);
       var l1 = api.txt(s, "serif", o.line || "Want reels like this?", 470, 92);
       var l2 = api.txt(s, "kick", "Comment", 690, 40);
@@ -274,7 +292,7 @@
       E("span", "", key, o.keyword);
       api.slam(key, o.at + 0.7, 2.4);
       api.flashAt(o.at + 0.72, 0.4, 0.35);
-      tl.fromTo(key, { boxShadow: "0 0 30px rgba(244,183,64,0.3)" }, { boxShadow: "0 0 90px rgba(244,183,64,0.75)", duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: Math.max(1, Math.floor((F.duration - o.at - 1.3) / 0.6)), immediateRender: false }, o.at + 1.3);
+      tl.fromTo(key, { boxShadow: "0 0 30px " + rgba(0.3) }, { boxShadow: "0 0 90px " + rgba(0.75), duration: 0.6, ease: "sine.inOut", yoyo: true, repeat: Math.max(1, Math.floor((F.duration - o.at - 1.3) / 0.6)), immediateRender: false }, o.at + 1.3);
       var l3 = api.txt(s, "h2", o.sub || "I'll DM you the full stack.", 1010, 62);
       var l4 = api.txt(s, "serif", o.sub2 || "Free.", 1090, 84);
       api.rise(l3, o.at + 1.15, { st: 0.05 });
@@ -282,8 +300,8 @@
       // Arrow sweeping toward the comment icon (right rail, around y 1390 on a 1080x1920 reel).
       var ar = Kit.svg("svg", { width: 260, height: 260, viewBox: "0 0 260 260" }, s);
       ar.style.cssText = "position:absolute;left:690px;top:1170px;overflow:visible";
-      var path = Kit.svg("path", { d: "M20 20 C 120 30, 200 90, 230 200", fill: "none", stroke: "#f4b740", "stroke-width": 10, "stroke-linecap": "round" }, ar);
-      var head = Kit.svg("path", { d: "M196 186 L232 214 L246 170", fill: "none", stroke: "#f4b740", "stroke-width": 10, "stroke-linecap": "round", "stroke-linejoin": "round" }, ar);
+      var path = Kit.svg("path", { d: "M20 20 C 120 30, 200 90, 230 200", fill: "none", stroke: T.accent, "stroke-width": 10, "stroke-linecap": "round" }, ar);
+      var head = Kit.svg("path", { d: "M196 186 L232 214 L246 170", fill: "none", stroke: T.accent, "stroke-width": 10, "stroke-linecap": "round", "stroke-linejoin": "round" }, ar);
       api.drawOn(path, o.at + 1.9, 0.5, "power2.inOut");
       tl.fromTo(head, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.15 }, o.at + 2.3);
       tl.fromTo(ar, { x: 0, y: 0 }, { x: 14, y: 14, duration: 0.45, ease: "sine.inOut", yoyo: true, repeat: 5, immediateRender: false }, o.at + 2.45);
@@ -294,8 +312,42 @@
       return s;
     };
 
+    // ---------- voice first: scene times come from the voiceover (FILM.timing, FILM.words from reel.py vo) ----------
+    api.line = function (i) { return (F.timing || [])[i] || { start: 0, end: 0 }; };
+    // Big captions synced word by word to the voice: short phrases, the spoken word lit in the accent colour.
+    api.captions = function (words, o) {
+      o = o || {};
+      words = words || F.words || [];
+      var top = o.top || 1250, maxW = o.maxWords || 4, maxC = o.maxChars || 20;
+      var layer = E("div", "caps", root);
+      var chunks = [], cur = null;
+      words.forEach(function (w, i) {
+        var prev = words[i - 1];
+        var breakHere = !cur || cur.words.length >= maxW || (cur.chars + w.w.length) > maxC || (prev && (w.line !== prev.line || w.t - (prev.t + prev.d) > 0.35));
+        if (breakHere) { cur = { words: [], chars: 0 }; chunks.push(cur); }
+        cur.words.push(w);
+        cur.chars += w.w.length + 1;
+      });
+      chunks.forEach(function (c, ci) {
+        var a = c.words[0].t - 0.06, last = c.words[c.words.length - 1];
+        var next = chunks[ci + 1];
+        var b = next ? Math.min(next.words[0].t - 0.1, last.t + last.d + 0.7) : last.t + last.d + 0.8;
+        var row = E("div", "cap", layer);
+        row.style.top = top + "px";
+        var spans = c.words.map(function (w) { var sp = E("span", "cw", row, w.w); row.appendChild(document.createTextNode(" ")); return sp; });
+        tl.fromTo(row, { autoAlpha: 0, y: 26, scale: 0.92 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.16, ease: "back.out(2)" }, a);
+        tl.fromTo(row, { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.03, immediateRender: false }, b);
+        c.words.forEach(function (w, wi) {
+          var sp = spans[wi];
+          tl.fromTo(sp, { color: T.ink, scale: 1 }, { color: T.accent, scale: 1.1, duration: 0.07, ease: "power2.out", immediateRender: false }, w.t);
+          tl.fromTo(sp, { color: T.accent, scale: 1.1 }, { color: T.ink, scale: 1, duration: 0.12, ease: "power2.out", immediateRender: false }, Math.min(w.t + Math.max(w.d, 0.12), b - 0.02));
+        });
+      });
+      return layer;
+    };
+
     api.end = function () { tl.set({}, {}, F.duration); return tl; };
     return api;
   }
-  window.Reel = { create: create };
+  window.Reel = { create: create, THEMES: THEMES };
 })();

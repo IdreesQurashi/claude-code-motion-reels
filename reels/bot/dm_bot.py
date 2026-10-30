@@ -129,7 +129,7 @@ class Sender:
     def deliver(self, igsid):
         t = self.tpl
         msg = {"attachment": {"type": "template", "payload": {"template_type": "generic", "elements": [
-            {"title": t["deliver_title"], "subtitle": t["deliver_subtitle"], "buttons": [{"type": "web_url", "url": t["delivery_url"], "title": t["deliver_button"]}]}]}}}
+            {"title": t["deliver_title"], "subtitle": t["deliver_subtitle"], "buttons": [{"type": "web_url", "url": t["delivery_url"], "title": t["deliver_button"]}] + [{"type": "web_url", "url": b["url"], "title": b["title"]} for b in t.get("extra_buttons", [])][:2]}]}}}
         ok = self.send({"id": igsid}, msg, "deliver", igsid)
         if not ok:
             ok = self.send({"id": igsid}, {"text": f"{t['deliver_title']} {t['delivery_url']}"}, "deliver_text", igsid)
